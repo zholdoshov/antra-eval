@@ -184,8 +184,10 @@ const Controller = ((model, view) => {
           const cartItem = state.cart.find((item) => item.id === parseInt(id));
           console.log(cartItem);
           if (cartItem !== undefined) {
-            console.log(id);
-            model.updateCart(id, cartItem.amount + amount).then(() => {
+            console.log(cartItem.amount + amount);
+            const newAmount = cartItem.amount + amount;
+            const updatedItem = { ...cartItem, amount: newAmount };
+            model.updateCart(cartItem.id, updatedItem).then(() => {
               model.getCart().then((data) => (state.cart = data));
             });
           } else {
