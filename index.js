@@ -119,7 +119,7 @@ const View = (() => {
           <button class="minus-btn" data-id="${inventory.id}">-</button>
           <input type="text" value="0" class="amount-input" data-id="${inventory.id}" />
           <button class="plus-btn" data-id="${inventory.id}">+</button>
-          <button class="add-to-cart-btn" data-id="${inventory.id}">Add to Cart</button>
+          <button class="add-to-cart-btn" data-id="${inventory.id}">add to Cart</button>
         </li>`;
       inventoriesTemp += inventoryItemTemp;
     });
@@ -131,8 +131,8 @@ const View = (() => {
     cart.forEach((item) => {
       const itemTemp = `
       <li>
-        <span>${item.content} (${item.amount})</span>
-        <button class="delete-btn" data-id="${item.id}">Delete</button>
+        <span>${item.content} x ${item.amount}</span>
+        <button class="delete-btn" data-id="${item.id}">delete</button>
       </li>`;
       cartTemp += itemTemp;
     });
@@ -152,17 +152,12 @@ const Controller = ((model, view) => {
   // implement your logic for Controller
   const state = new model.State();
 
-  const handleUpdateAmount = (e) => {
-    const id = e.target.dataset.id;
-    const amountInput = document.querySelector(
-      `.amount-input[data-id="${id}"]`
-    );
-    let amount = parseInt(amountInput.value);
-    if (e.target.classList.contains("plus-btn")) {
-      amountInput.value = ++amount;
-    } else if (e.target.classList.contains("minus-btn") && amount > 0) {
-      amountInput.value = --amount;
-    }
+  const handleUpdateAmount = (cartItem, amount) => {
+    const newAmount = cartItem.amount + amount;
+    const updatedItem = { ...cartItem, amount: newAmount };
+    model.updateCart(cartItem.id, updatedItem).then(() => {
+      model.getCart().then((data) => (state.cart = data));
+    });
   };
 
   const handleAddToCart = () => {
@@ -185,11 +180,7 @@ const Controller = ((model, view) => {
           console.log(cartItem);
           if (cartItem !== undefined) {
             console.log(cartItem.amount + amount);
-            const newAmount = cartItem.amount + amount;
-            const updatedItem = { ...cartItem, amount: newAmount };
-            model.updateCart(cartItem.id, updatedItem).then(() => {
-              model.getCart().then((data) => (state.cart = data));
-            });
+            handleUpdateAmount(cartItem, amount);
           } else {
             const newItem = { ...inventoryItem, amount };
             model.addToCart(newItem).then(() => {

@@ -1,6 +1,4 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
     display: flex;
@@ -13,7 +11,8 @@ body {
     width: 80%;
     max-width: 1200px;
     margin: auto;
-    background-color: #fff;
+    background-color: #f4f4f4;
+    border: black solid;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -30,25 +29,32 @@ body {
 
 .inventory-container h1,
 .cart-container h1 {
-    margin-bottom: 20px;
+    text-align: center;
 }
 
-.inventory-list,
-.cart-list {
+.inventory__list,
+.cart__list {
     list-style: none;
-    padding: 0;
+    padding: 10px;
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
-.inventory-list li,
-.cart-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.inventory__list li,
+.cart__list li {
     padding: 10px;
-    border-bottom: 1px solid #ddd;
+    margin-top: 10px;
+    background-color: #cdc5aae5;
+    display: flex;
+    border-radius: 5px;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .amount-input {
+    border: none;
+    outline: none;
+    background: none;
     width: 40px;
     text-align: center;
 }
@@ -62,47 +68,37 @@ button {
 }
 
 .add-to-cart-btn {
-    background-color: #28a745;
-    color: #fff;
-}
-
-.add-to-cart-btn:hover {
-    background-color: #218838;
-}
-
-.minus-btn,
-.plus-btn {
     background-color: #007bff;
     color: #fff;
 }
 
-.minus-btn:hover,
-.plus-btn:hover {
-    background-color: #0056b3;
+.plus-btn {
+    background-color: #1fa11a;
+    color: #fff;
+}
+
+.minus-btn {
+    background-color: #a21725;
+    color: #fff;
 }
 
 .delete-btn {
-    background-color: #dc3545;
+    background-color: #007bff;
     color: #fff;
 }
 
-.delete-btn:hover {
-    background-color: #c82333;
-}
-
+.inventory__list,
 .cart-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    height: 50vh;
 }
 
-.checkout-btn {
-    margin-top: 20px;
+.cart__checkout-btn {
     align-self: flex-end;
-    background-color: #ffc107;
+    width: 100%;
+    padding: 10px;
+    align-self: flex-end;
+    background-color: #000;
     color: #fff;
-}
-
-.checkout-btn:hover {
-    background-color: #e0a800;
 }
